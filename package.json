@@ -43,7 +43,7 @@
 		"build:prod": "cross-env NODE_ENV=production tsup",
 		"build": "pnpm lint && pnpm test:ci && pnpm build:prod",
 		"lint": "eslint",
-		"release": "node scripts/release.js --verbose",
+		"release": "node scripts/release.js --verbose --npm",
 		"//2a": "*********************************************************************",
 		"//2b": "***************************** UNIT TESTS ****************************",
 		"//2c": "*********************************************************************",
@@ -56,11 +56,7 @@
 		"test:coverage": "pnpm test:watch --coverage",
 		"test:coverage:ci": "pnpm test:ci --coverage",
 		"test:serve-coverage": "http-server ./coverage/lcov-report --gzip true -p 0 -o --silent",
-		"test:coverage:serve": "concurrently --prefix none --kill-others \"pnpm test:coverage\" \"pnpm test:serve-coverage\"",
-		"//4a": "*********************************************************************",
-		"//4b": "************************ TARGETED UNIT TESTS ************************",
-		"//4c": "*********************************************************************",
-		"test:jest": "pnpm test:watch jest.test.ts"
+		"test:coverage:serve": "concurrently --prefix none --kill-others \"pnpm test:coverage\" \"pnpm test:serve-coverage\""
 	},
 	"devDependencies": {
 		"@alessiofrittoli/node-scripts": "3.3.0",
