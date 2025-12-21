@@ -1,5 +1,5 @@
 import { existsSync, mkdirSync } from 'fs'
-import { parse } from 'path'
+import { dirname } from 'path'
 import type {
 	Browser,
 	Page,
@@ -86,7 +86,7 @@ export class PDF
 	 * @param data The data to print in the PDF.
 	 * @param options An object defining custom options. See {@link GeneratePdfOptions}.
 	 */
-	constructor( options: GeneratePdfOptions )
+	constructor( options?: GeneratePdfOptions )
 	{
 		this.options = {
 			printBackground: true, inlineCss: true, ...options
@@ -163,7 +163,7 @@ export class PDF
 		}
 
 		if ( content ) {
-			const output = await this.compileMarkup( content )
+			const output = await this.compileMarkup( content, options )
 			
 			/**
 			 * Set page content.
@@ -174,6 +174,7 @@ export class PDF
 			} )
 
 		} else if( url ) {
+
 			/**
 			 * Set page content from URL.
 			 * 
@@ -181,6 +182,17 @@ export class PDF
 			await page.goto( Url.format( url ), {
 				waitUntil: 'networkidle0',
 			} )
+
+		} else {
+
+			/**
+			 * Set page no content.
+			 * 
+			 */
+			await page.setContent( 'No content provided.', {
+				waitUntil: 'networkidle0',
+			} )
+
 		}
 
 
@@ -198,7 +210,7 @@ export class PDF
 		if ( requestsLoaded ) await requestsLoaded
 
 		if ( path ) {
-			const { dir } = parse( path )
+			const dir = dirname( path )
 			if ( ! existsSync( dir ) ) {
 				mkdirSync( dir, { recursive: true } )
 			}
