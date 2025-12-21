@@ -22,6 +22,17 @@
 
 - [Getting started](#getting-started)
 - [API Reference](#api-reference)
+- [Examples](#examples)
+  - [Basic usage](#basic-usage)
+  - [Generate a PDF from a webpage](#generate-a-pdf-from-a-webpage)
+  - [Store generated PDF into a file](#store-generated-pdf-into-a-file)
+  - [Disabling inline CSS](#disabling-inline-css)
+  - [Loading custom fonts](#loading-custom-fonts)
+    - [Load custom font from remote URL](#load-custom-font-from-remote-url)
+    - [Load custom font declaration from local file](#load-custom-font-declaration-from-local-file)
+    - [Load custom font from local file](#load-custom-font-from-local-file)
+  - [Generating multiple pdf with the same constructed instance](#generating-multiple-pdf-with-the-same-constructed-instance)
+  - [Rendering Readable Streams](#rendering-readable-streams)
 - [Development](#development)
   - [Install depenendencies](#install-depenendencies)
   - [Build the source code](#build-the-source-code)
@@ -47,11 +58,323 @@ or using `pnpm`
 pnpm i @alessiofrittoli/html-to-pdf
 ```
 
+> [!WARNING]
+> This package uses `puppeteer` and cannot be external, thus it needs to be installed in your project by running
+>
+> ```bash
+> pnpm i puppeteer
+> ```
+
+then import it and easily use it like this
+
+```ts
+import { PDF } from "@alessiofrittoli/html-to-pdf";
+
+const content = `
+  <html>
+    <body>
+      <h1>My first PDF!</h1>
+    </body>
+  </html>
+`;
+
+const path = "folder/my-first-pdf.pdf";
+
+await new PDF({ content, path }).generate();
+```
+
 ---
 
 ### API Reference
 
-⚠️ Docs coming soon
+#### Supported input types
+
+We accept multiple input types to provide high flexibility by using [`coerceToUint8Array()`](https://npmjs.com/package/@alessiofrittoli/crypto-buffer#coercetouint8array) exported by [@alessiofrittoli/crypto-buffer](https://npmjs.com/package/@alessiofrittoli/crypto-buffer) which gives us a standard view of the provided data.
+
+See [`coerceToUint8Array()`](https://npmjs.com/package/@alessiofrittoli/crypto-buffer#coercetouint8array) for a list of supported data type.
+
+---
+
+### Examples
+
+#### Basic usage
+
+```ts
+import { PDF } from "@alessiofrittoli/html-to-pdf";
+
+const content = `
+  <html>
+    <body>
+      <h1>My first PDF!</h1>
+    </body>
+  </html>
+`;
+
+const buffer = await new PDF({ content }).generate();
+// do something with pdf `buffer`
+```
+
+---
+
+#### Generate a PDF from a webpage
+
+```ts
+import { PDF } from "@alessiofrittoli/html-to-pdf";
+
+const url = "https://google.com";
+
+const buffer = await new PDF({ url }).generate();
+// do something with pdf `buffer`
+```
+
+---
+
+#### Store generated PDF into a file
+
+```ts
+import { join } from "path";
+import { PDF } from "@alessiofrittoli/html-to-pdf";
+
+const content = `...`;
+const path = "folder/my-first-pdf.pdf";
+
+const buffer = await new PDF({ content, path }).generate();
+// do something else with pdf `buffer`
+```
+
+---
+
+#### Disabling inline CSS
+
+By default all styles defined in a `<style />` HTML tag get applied to the corresponding HTML NodeElement. You can opt-out by this behavior by setting `inlineCss` to `false`.
+
+This may be usefull to properly load custom fonts using `@font-face` declaration. If you still want to inline CSS (which is recommended) but load custom fonts, please read [Loading custom fonts](#loading-custom-fonts) section.
+
+```ts
+import { PDF } from "@alessiofrittoli/html-to-pdf";
+
+const content = `
+  <html>
+    <head>
+      <style>
+        ...
+      </style>
+    </head>
+    <body>
+      <h1>My first PDF!</h1>
+    </body>
+  </html>
+`;
+
+// parsed markup will contain `<style />` tag before rendering the PDF.
+await new PDF({ content }).generate();
+```
+
+---
+
+#### Loading custom fonts
+
+You can load additional styles that won't be parsed before rendering the PDF by defining URLs, paths or CSS declarations through the `GeneratePdfOptions.styles` option.
+
+##### Load custom font from remote URL
+
+```ts
+import { PDF, type StyleTagsOptions } from "@alessiofrittoli/html-to-pdf";
+
+const content = `
+  <html class='corinthia-regular'>
+    <head>
+      <style>
+        .corinthia-regular {
+          font-family: "Corinthia", cursive;
+          font-weight: 400;
+          font-style: normal;
+        }
+      </style>
+    </head>
+    <body>
+      <h1>My first PDF!</h1>
+    </body>
+  </html>
+`;
+
+const styles: StyleTagsOptions = [
+  { url: "https://fonts.googleapis.com/css2?family=Corinthia&display=swap" },
+];
+
+const pdf = new PDF({ content, styles });
+```
+
+---
+
+##### Load custom font declaration from local file
+
+```ts
+import { join } from "path";
+import { PDF, type StyleTagsOptions } from "@alessiofrittoli/html-to-pdf";
+
+const content = `
+  <html class='corinthia-regular'>
+    <head>
+      <style>
+        .corinthia-regular {
+          font-family: "Corinthia", cursive;
+          font-weight: 400;
+          font-style: normal;
+        }
+      </style>
+    </head>
+    <body>
+      <h1>My first PDF!</h1>
+    </body>
+  </html>
+`;
+
+const styles: StyleTagsOptions = [
+  { path: join(process.cwd(), "font-css-file-declaration.css") },
+];
+
+const pdf = new PDF({ content, styles });
+```
+
+---
+
+```css
+/* font-css-file-declaration.css */
+/* latin */
+@font-face {
+  font-family: "Corinthia";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(https://fonts.gstatic.com/s/corinthia/v13/wEO_EBrAnchaJyPMHE01VvoK_kgXiQ.woff2)
+    format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+```
+
+---
+
+##### Load custom font from local file
+
+If you need to load a custom font that will be available in off-line conditions or you don't want to depend on external resources, you can embed the font by encoding it to base64.
+
+```ts
+import { join } from "path";
+import { Base64 } from "@alessiofrittoli/crypto-encoder";
+import { PDF, type StyleTagsOptions } from "@alessiofrittoli/html-to-pdf";
+
+const content = `
+  <html class='corinthia-regular'>
+    <head>
+      <style>
+        .corinthia-regular {
+          font-family: "Corinthia", cursive;
+          font-weight: 400;
+          font-style: normal;
+        }
+      </style>
+    </head>
+    <body>
+      <h1>My first PDF!</h1>
+    </body>
+  </html>
+`;
+
+const fontBasePath = resolve(process.cwd(), "assets/fonts/Corinthia");
+const fontfile = readFileSync(join(fontBasePath, "local-font-filename.woff2"));
+const fontBase64 = Base64.encode(fontfile, false);
+const css = readFileSync(
+  join(fontBasePath, "font-css-file-declaration.css"),
+  "utf-8"
+).replace("url(custom-font-url)", `url(data:font/woff2;base64,${fontBase64})`);
+
+const styles: StyleTagsOptions = [{ content: css }];
+
+const pdf = new PDF({ content, styles });
+```
+
+---
+
+```css
+/* font-css-file-declaration.css */
+/* latin */
+@font-face {
+  font-family: "Corinthia";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(custom-font-url) format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+```
+
+---
+
+#### Generating multiple pdf with the same constructed instance
+
+You can generate multiple PDFs with a single constructed instance of `PDF` which shares common options and eventually override or add new options for each generated pdf.
+
+This is possible since customization options can be either passed to the `PDF` constructor or to the `PDF.generate()` method.
+
+> [!WARNING]
+> Note that you cannot generate multiple PDFs with the same ReadableStream since it can be read once.
+> If you still need to do so, please set the `content` once by passing the `ReadableStream` in the constructor.
+> Please refer to the [Rendering Readable Streams](#rendering-readable-streams) section for more info.
+
+```ts
+import { PDF } from "@alessiofrittoli/html-to-pdf";
+
+const pdf = new PDF({
+  format: "A4",
+  styles: [{ path: "/absolute/path/to/custom/style.css" }],
+});
+
+await pdf.generate({ content: "PDF 1", path: "folder/pdf-1.pdf" });
+await pdf.generate({
+  content: "PDF 2",
+  path: "folder/pdf-2.pdf",
+  format: "A3",
+  landscape: true,
+});
+```
+
+---
+
+#### Rendering Readable Streams
+
+In addition to the various [supported input types](#supported-input-types), this library also supports `ReadableStreams` (it happens more often than you think).
+
+In this example we render async React Server Components inside a PDF page.
+
+Asynchronous React Server Components needs to be rendered using [`renderToReadableStream()`](https://react.dev/reference/react-dom/server/renderToReadableStream) which returns a Promise that resolves a `ReadableStream` so this is a perfect example on how to deal with it.
+
+```tsx
+import { PDF } from "@alessiofrittoli/html-to-pdf";
+
+const MyAsyncPdfComponent: React.FC = async () => {
+  await { ...someAsyncTask };
+
+  return (
+    <html>
+      <body>
+        <h1>My React PDF Component</h1>
+      </body>
+    </html>
+  );
+};
+
+const { renderToReadableStream } = await import("react-dom/server");
+
+const content = await renderToReadableStream(<MyAsyncPdfComponent />);
+const pdf = new PDF({ content });
+
+await pdf.generate();
+```
 
 ---
 
