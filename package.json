@@ -1,7 +1,7 @@
 {
-	"name": "@alessiofrittoli/node-module-starter",
-	"version": "1.14.0",
-	"description": "Starter repository for developing node_modules",
+	"name": "@alessiofrittoli/html-to-pdf",
+	"version": "1.0.0-alpha.1",
+	"description": "Easily convert HTML to PDF",
 	"author": {
 		"name": "Alessio Frittoli",
 		"email": "info@alessiofrittoli.it",
@@ -17,16 +17,16 @@
 	"keywords": [
 		"nodejs",
 		"npm",
-		"node_modules"
+		"pdf"
 	],
-	"homepage": "https://github.com/alessiofrittoli/node-module-starter#readme",
+	"homepage": "https://github.com/alessiofrittoli/html-to-pdf#readme",
 	"bugs": {
-		"url": "https://github.com/alessiofrittoli/node-module-starter/issues",
+		"url": "https://github.com/alessiofrittoli/html-to-pdf/issues",
 		"email": "info@alessiofrittoli.it"
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/alessiofrittoli/node-module-starter.git"
+		"url": "git+https://github.com/alessiofrittoli/html-to-pdf.git"
 	},
 	"main": "./dist/index.js",
 	"module": "./dist/index.mjs",
@@ -63,15 +63,16 @@
 		"test:jest": "pnpm test:watch jest.test.ts"
 	},
 	"devDependencies": {
-		"@alessiofrittoli/node-scripts": "3.2.0",
-		"@eslint/js": "^9.39.1",
+		"@alessiofrittoli/node-scripts": "3.3.0",
+		"@eslint/js": "^9.39.2",
 		"@jest/globals": "^30.2.0",
+		"@types/inline-css": "^3.0.4",
 		"@types/jest": "^30.0.0",
-		"@types/node": "^24.10.1",
+		"@types/node": "^25.0.3",
 		"concurrently": "^9.2.1",
 		"cross-env": "^10.1.0",
 		"dotenv": "^17.2.3",
-		"eslint": "^9.39.1",
+		"eslint": "^9.39.2",
 		"globals": "^16.5.0",
 		"http-server": "^14.1.1",
 		"jest": "^30.2.0",
@@ -80,6 +81,14 @@
 		"ts-node": "^10.9.2",
 		"tsup": "^8.5.1",
 		"typescript": "^5.9.3",
-		"typescript-eslint": "^8.48.1"
+		"typescript-eslint": "^8.50.0"
+	},
+	"dependencies": {
+		"@alessiofrittoli/crypto-buffer": "^3.9.0",
+		"@alessiofrittoli/stream-reader": "^2.6.1",
+		"@alessiofrittoli/url-utils": "^3.7.1",
+		"bufferutil": "^4.1.0",
+		"inline-css": "^4.0.3",
+		"puppeteer": "^24.34.0"
 	}
 }

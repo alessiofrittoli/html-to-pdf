@@ -1,6 +1,6 @@
-# Contributing to Node Module Starter 🛠️
+# Contributing to Html to PDF 📓
 
-We’re excited that you’re interested in contributing to Node Module Starter! This guide will help you get started.
+We’re excited that you’re interested in contributing to Html to PDF! This guide will help you get started.
 
 ## How to Contribute
 
@@ -8,7 +8,7 @@ We’re excited that you’re interested in contributing to Node Module Starter!
 
 If you find a bug, have a question, or want to suggest a new feature:
 
-- Search Existing Issues: Check the [Issues](https://github.com/alessiofrittoli/node-module-starter/issues) tab to see if your concern has already been addressed.
+- Search Existing Issues: Check the [Issues](https://github.com/alessiofrittoli/html-to-pdf/issues) tab to see if your concern has already been addressed.
 - Create a New Issue: If not, open a new issue. Please provide:
   - A clear and descriptive title.
   - Detailed steps to reproduce the issue (if applicable).
@@ -18,12 +18,12 @@ If you find a bug, have a question, or want to suggest a new feature:
 
 Please, take a look at [Contributing to a project - GitHub Docs](https://docs.github.com/en/get-started/exploring-projects-on-github/contributing-to-a-project) page for more in-detail informations.
 
-- Go to the [repository page](https://github.com/alessiofrittoli/node-module-starter).
+- Go to the [repository page](https://github.com/alessiofrittoli/html-to-pdf).
 - Click the Fork button.
 - Clone your fork to your local machine:
 
 ```bash
-git clone https://github.com/your-username/node-module-starter.git
+git clone https://github.com/your-username/html-to-pdf.git
 ```
 
 ### 3. Create a Branch
@@ -33,7 +33,7 @@ To make changes:
 - Navigate to your cloned repository:
 
 ```bash
-cd node-module-starter  
+cd html-to-pdf
 ```
 
 - Create and switch to a new branch:
@@ -63,7 +63,7 @@ git add .
 - Write a meaningful commit message:
 
 ```bash
-git commit -m "Add feature/bug-fix description"  
+git commit -m "Add feature/bug-fix description"
 ```
 
 ### 6. Push to Your Fork
@@ -71,7 +71,7 @@ git commit -m "Add feature/bug-fix description"
 Push your branch to your forked repository:
 
 ```bash
-git push origin feature/your-feature-name  
+git push origin feature/your-feature-name
 ```
 
 ### 7. Submit a Pull Request
@@ -91,4 +91,4 @@ Pull requests will be reviewed by maintainers.
 Feedback may be provided; be prepared to make changes if requested.
 Once approved, your contribution will be merged into the main branch.
 
-Thank you for helping improve Node Module Starter! 🎉
+Thank you for helping improve Html to PDF! 🎉
