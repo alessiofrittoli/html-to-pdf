@@ -1,4 +1,6 @@
 onlyBuiltDependencies:
   - '@alessiofrittoli/type-utils'
+  - bufferutil
   - esbuild
+  - puppeteer
   - unrs-resolver
