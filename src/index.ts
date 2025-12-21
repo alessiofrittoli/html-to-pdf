@@ -3,9 +3,10 @@ import { dirname } from 'path'
 import type {
 	Browser,
 	Page,
-	FrameAddStyleTagOptions,
+	FrameAddStyleTagOptions as _FrameAddStyleTagOptions,
 	HTTPResponse,
-	PDFOptions
+	PDFOptions,
+	PDFMargin as _PDFMargin
 } from 'puppeteer'
 import { StreamReader } from '@alessiofrittoli/stream-reader'
 import {
@@ -16,13 +17,19 @@ import {
 import { Url, type UrlInput } from '@alessiofrittoli/url-utils'
 
 
+
+export type PDFMargin			= _PDFMargin
+export type StyleTagOptions		= _FrameAddStyleTagOptions
+export type StyleTagsOptions	= StyleTagOptions[]
+
+
 export interface GeneratePdfOptions extends PDFOptions
 {
 	/**
 	 * Load additional styles.
 	 * 
 	 */
-	styles?: FrameAddStyleTagOptions[]
+	styles?: StyleTagsOptions
 	/**
 	 * Inline CSS properties into the style attribute in an html document.
 	 * 
