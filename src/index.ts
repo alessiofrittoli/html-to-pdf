@@ -158,7 +158,7 @@ export class PDF {
 			 *
 			 */
 			await page.setContent(output, {
-				waitUntil: 'networkidle0',
+				waitUntil: 'domcontentloaded',
 			})
 		} else if (url) {
 			/**
@@ -174,7 +174,7 @@ export class PDF {
 			 *
 			 */
 			await page.setContent('No content provided.', {
-				waitUntil: 'networkidle0',
+				waitUntil: 'domcontentloaded',
 			})
 		}
 
