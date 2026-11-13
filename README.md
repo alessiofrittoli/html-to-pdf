@@ -82,31 +82,6 @@ or using `pnpm`
 pnpm i @alessiofrittoli/html-to-pdf
 ```
 
-> [!WARNING]
-> This package uses `puppeteer` and cannot be external, thus it needs to be installed in your project by running
->
-> ```bash
-> pnpm i puppeteer
-> ```
-
-then import it and easily use it like this
-
-```ts
-import { PDF } from '@alessiofrittoli/html-to-pdf'
-
-const content = `
-  <html>
-    <body>
-      <h1>My first PDF!</h1>
-    </body>
-  </html>
-`
-
-const path = 'folder/my-first-pdf.pdf'
-
-await new PDF({ content, path }).generate()
-```
-
 ---
 
 ### Development
