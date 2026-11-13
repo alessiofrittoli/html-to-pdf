@@ -1,17 +1,37 @@
 {
 	"workbench.colorCustomizations": {
-		"titleBar.activeBackground": "#212121",
+		// title bar
+		"titleBar.activeBackground": "#00000000",
 		"titleBar.border": "#CB3837",
 		"titleBar.activeForeground": "#F0F0F0",
-		"statusBar.background": "#212121",
-		"statusBar.border":"#CB3837",
+		// status bar
+		"statusBar.background": "#191919",
+		"statusBar.border": "#CB3837",
 		"statusBar.foreground": "#F0F0F0",
+		// activity bar
 		"activityBar.activeBorder": "#CB3837",
-		"activityBarBadge.foreground":"#F0F0F0",
-		"activityBarBadge.background":"#CB3837",
+		"activityBarBadge.foreground": "#F0F0F0",
+		"activityBarBadge.background": "#CB3837",
+		// tab
+		"tab.activeBorderTop": "#CB3837",
+		// buttons
+		"button.background": "#CB3837",
+		"button.foreground": "#F0F0F0",
+		"button.hoverBackground": "#D25C5C",
+		"button.separator": "#F0F0F0",
+		// secondary buttons
+		"button.secondaryBackground": "#00000000",
+		"button.secondaryForeground": "#F0F0F0",
+		"button.secondaryHoverBackground": "#CB383720"
 	},
+	"editor.defaultFormatter": "esbenp.prettier-vscode",
 	"editor.formatOnSave": true,
-	"[markdown]": {
-		"editor.defaultFormatter": "esbenp.prettier-vscode"
+	"files.associations": {
+		".ignore": "ignore",
+		".gitignore": "ignore"
 	},
+	"js/ts.tsdk.path": "node_modules/typescript/lib",
+	"json.schemaDownload.trustedDomains": {
+		"https://raw.githubusercontent.com/DavidAnson/markdownlint/": true
+	}
 }

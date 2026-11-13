@@ -1,6 +1,7 @@
-onlyBuiltDependencies:
-  - '@alessiofrittoli/type-utils'
-  - bufferutil
-  - esbuild
-  - puppeteer
-  - unrs-resolver
+allowBuilds:
+  '@alessiofrittoli/type-utils': false
+  bufferutil: true
+  esbuild: true
+  puppeteer: true
+minimumReleaseAgeExclude:
+  - '@alessiofrittoli/*'

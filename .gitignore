@@ -5,3 +5,5 @@
 .env.*
 !.env.test
 .DS_Store
+.cache
+tsconfig.tsbuildinfo
